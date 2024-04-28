@@ -31,16 +31,26 @@ async function run() {
 
     // api
     const passwordCollection = client.db("passwordDB").collection("passwords");
-
+   
+     // show datas  by specific user using query
     app.get("/password", async (req, res) => {
-      const cursor = passwordCollection.find();
+       
+       console.log(req.query)
+        
+         let query = {}
+         if(req.query?.email)
+         {
+            query = {email:req.query.email}
+         }
+
+      const cursor = passwordCollection.find(query);
       const result = await cursor.toArray();
 
       res.send(result);
     });
     app.post("/password", async (req, res) => {
-      const user = req.body;
 
+      const user = req.body;
       const result = await passwordCollection.insertOne(user);
 
       res.send(result);
@@ -71,7 +81,8 @@ async function run() {
         const datas= {
 
                 $set:{
-                 
+                   
+                   email: data.email,
                    site : data.site,
                    username : data.username,
                    password : data.password,
