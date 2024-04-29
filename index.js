@@ -35,15 +35,15 @@ async function run() {
      // show datas  by specific user using query
     app.get("/password", async (req, res) => {
        
-       console.log(req.query)
+      //  console.log(req.query)
         
-         let query = {}
-         if(req.query?.email)
-         {
-            query = {email:req.query.email}
-         }
+      //    let query = {}
+      //    if(req.query?.email)
+      //    {
+      //       query = {email:req.query.email}
+      //    }
 
-      const cursor = passwordCollection.find(query);
+      const cursor = passwordCollection.find();
       const result = await cursor.toArray();
 
       res.send(result);
